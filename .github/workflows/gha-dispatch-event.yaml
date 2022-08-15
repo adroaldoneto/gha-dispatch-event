@@ -23,6 +23,20 @@ on: [repository_dispatch]
 #           echo "Unexpected event '${{ github.event.action }}' received from '${{ github.event.client_payload.repository }}'" 
 
 jobs:
+
+  extract_version:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ step.version.outputs.tag }}
+    steps:
+      - name: Extract branch tag
+        id: version
+        run: |
+          BRANCH=${github.event.client_payload.ref##*/}
+          VERSION="${BRANCH//release-/""}"
+          echo $VERSION
+          echo ::set-output name=tag::$(echo $VERSION)
+
   build:
     runs-on: ubuntu-latest
     if: github.event.action == 'release'
