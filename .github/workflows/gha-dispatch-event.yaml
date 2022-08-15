@@ -32,7 +32,8 @@ jobs:
       - name: Extract branch tag
         id: version
         run: |
-          BRANCH=${github.event.client_payload.ref##*/}
+          REF="'${{ github.event.client_payload.ref }}'"
+          BRANCH=${REF##*/}
           VERSION="${BRANCH//release-/""}"
           echo $VERSION
           echo ::set-output name=version::$(echo $VERSION)
