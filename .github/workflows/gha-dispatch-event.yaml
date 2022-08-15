@@ -27,7 +27,7 @@ jobs:
   extract_version:
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ step.version.outputs.tag }}
+      version: ${{ steps.version.outputs.version }}
     steps:
       - name: Extract branch tag
         id: version
@@ -35,7 +35,7 @@ jobs:
           BRANCH=${github.event.client_payload.ref##*/}
           VERSION="${BRANCH//release-/""}"
           echo $VERSION
-          echo ::set-output name=tag::$(echo $VERSION)
+          echo ::set-output name=version::$(echo $VERSION)
 
   build:
     runs-on: ubuntu-latest
