@@ -1,0 +1,23 @@
+on: [repository_dispatch]
+
+jobs:
+  expected-event:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'Start Formula Workflow'
+    steps:
+      - name: Event Information
+        run: |
+          echo "Event '${{ github.event.action }}' received from '${{ github.event.client_payload.repository }}'"
+      - name: RESPONSE - Dispatch response event to INIT repository
+        run: |
+          curl -X POST https://api.github.com/repos/adroaldoneto/gha-dispatch-event-initiator/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.ACCESS_TOKEN }} \
+          --data '{"event_type": "Formula Workflow Response", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+  unexpected-event:
+    runs-on: ubuntu-latest
+    if: github.event.action != 'Start Formula Workflow'
+    steps:
+      - name: Event Information
+        run: |
+          echo "Unexpected event '${{ github.event.action }}' received from '${{ github.event.client_payload.repository }}'" 
