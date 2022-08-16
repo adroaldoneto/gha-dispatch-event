@@ -25,7 +25,7 @@ on: [repository_dispatch]
 jobs:
 
   extract_version:
-    name: ${{ github.event.client_payload.job_id }}
+    name: extract_version-${{ github.event.client_payload.job_id }}
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
@@ -41,7 +41,7 @@ jobs:
           echo ::set-output name=version::$(echo $VERSION)
 
   build:
-    name: ${{ github.event.client_payload.job_id }}
+    name: build-${{ github.event.client_payload.job_id }}
     runs-on: ubuntu-latest
     if: github.event.action == 'release'
     steps:
