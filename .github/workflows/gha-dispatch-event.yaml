@@ -39,13 +39,6 @@ jobs:
           echo $VERSION
           echo ::set-output name=version::$(echo $VERSION)
 
-          sleep 30s
-
-          curl -X POST https://api.github.com/repos/adroaldoneto/gha-dispatch-event-initiator/dispatches \
-          -H 'Accept: application/vnd.github.everest-preview+json' \
-          -u ${{ secrets.ACCESS_TOKEN }} \
-          --data '{"event_type": "success", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
-
   build:
     runs-on: ubuntu-latest
     if: github.event.action == 'release'
@@ -63,6 +56,15 @@ jobs:
           echo "REF: '${{ github.ref }}'"
           echo "Event Repository Name: '${{ github.event.respository.name }}'"
           echo "Event Repository Owner: '${{ github.repository_owner }}'"
+          
+          
+          sleep 20s
+
+          curl -X POST https://api.github.com/repos/adroaldoneto/gha-dispatch-event-initiator/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.ACCESS_TOKEN }} \
+          --data '{"event_type": "success", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+          
   invalid-event:
     runs-on: ubuntu-latest
     if: github.event.action != 'release'
