@@ -53,6 +53,9 @@ jobs:
           echo "SHA: '${{ github.event.client_payload.sha }}'" 
           echo "SHA: '${{ github.event.client_payload.repository }}'" 
           echo "'${{ github.event.client_payload.ref }}'"
+          echo "REF: '${{ github.ref }}'"
+          echo "Event Repository Name: '${{ github.event.respository.name }}'"
+          echo "Event Repository Owner: '${{ github.repository_owner }}'"
   invalid-event:
     runs-on: ubuntu-latest
     if: github.event.action != 'release'
