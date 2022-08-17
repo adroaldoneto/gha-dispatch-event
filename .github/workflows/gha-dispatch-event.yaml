@@ -61,7 +61,7 @@ jobs:
           echo "Job Id: '${{ github.event.client_payload.job_id }}'"
           
           
-          sleep 20s
+          sleep 10s
 
           curl -X POST https://api.github.com/repos/adroaldoneto/gha-dispatch-event-initiator/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
