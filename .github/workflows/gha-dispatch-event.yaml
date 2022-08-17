@@ -60,7 +60,7 @@ jobs:
           echo "Job Id: '${{ github.event.client_payload.job_id }}'"
           
           
-          sleep 10s
+          sleep 40s
           
   invalid-event:
     runs-on: ubuntu-latest
