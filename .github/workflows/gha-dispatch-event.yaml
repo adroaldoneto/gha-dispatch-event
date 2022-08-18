@@ -58,10 +58,7 @@ jobs:
           echo "Event Repository Name: '${{ github.event.respository.name }}'"
           echo "Event Repository Owner: '${{ github.repository_owner }}'"
           echo "Job Id: '${{ github.event.client_payload.job_id }}'"
-          
-          
-          sleep 40s
-          
+                    
   invalid-event:
     runs-on: ubuntu-latest
     if: github.event.action != 'release'
