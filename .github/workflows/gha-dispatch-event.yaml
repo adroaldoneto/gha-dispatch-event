@@ -1,4 +1,6 @@
-on: [repository_dispatch]
+on: 
+  repository_dispatch:
+    type: [release]
 
 # jobs:
 #   expected-event:
@@ -30,6 +32,12 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
+      - name: Status
+        run: |
+          curl -X POST https://api.github.com/repos/adroaldoneto/gha-dispatch-event-initiator/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.ACCESS_TOKEN }} \
+          --data '{"event_type": "verify-workflow", "client_payload": { "sha": "${{ github.event.client_payload.sha }}", "state": "pending" }}'
       - name: Extract branch tag
         id: version
         run: |
@@ -58,11 +66,20 @@ jobs:
           echo "Event Repository Name: '${{ github.event.respository.name }}'"
           echo "Event Repository Owner: '${{ github.repository_owner }}'"
           echo "Job Id: '${{ github.event.client_payload.job_id }}'"
-                    
-  invalid-event:
-    runs-on: ubuntu-latest
-    if: github.event.action != 'release'
-    steps:
-      - name: Event Information
+
+      - name: Status
+        if: ${{ success() }}
         run: |
-          echo "Unexpected event '${{ github.event.action }}' received from '${{ github.event.client_payload.repository }}'" 
+          curl -X POST https://api.github.com/repos/adroaldoneto/gha-dispatch-event-initiator/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.ACCESS_TOKEN }} \
+          --data '{"event_type": "verify-workflow", "client_payload": { "sha": "${{ github.event.client_payload.sha }}", "state": "success" }}'
+      
+      - name: Status
+        if: ${{ failure() }}
+        run: |
+          curl -X POST https://api.github.com/repos/adroaldoneto/gha-dispatch-event-initiator/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.ACCESS_TOKEN }} \
+          --data '{"event_type": "verify-workflow", "client_payload": { "sha": "${{ github.event.client_payload.sha }}", "state": "failure" }}'
+                    
