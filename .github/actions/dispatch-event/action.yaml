@@ -17,7 +17,7 @@ run:
     - name: Dispaches
     - shell: bash
     - run: |
-        curl -X POST https://api.github.com/repos/${{ inputs.REPOSITORY }}/dispatches \
+        curl -X POST https://api.github.com/repos/${{ github.event.inputs.REPOSITORY }}/dispatches \
         --header 'Accept: application/vnd.github.everest-preview+json' \
-        -u ${{ inputs.ACCESS_TOKEN }} \
-        --data '${{ inputs.DATA }}'
+        -u ${{ github.event.inputs.ACCESS_TOKEN }} \
+        --data '${{ github.event.inputs.DATA }}'
