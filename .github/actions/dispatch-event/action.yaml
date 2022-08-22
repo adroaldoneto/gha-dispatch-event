@@ -1,4 +1,5 @@
 name: Dispatch Event
+description: Dispatch Event  
 
 inputs:
   ACCESS_TOKEN:
@@ -11,13 +12,13 @@ inputs:
     description: Dispatch event payload
     required: true
 
-run:
+runs:
   using: composite
   steps: 
     - name: Dispaches
     - shell: bash
     - run: |
-        curl -X POST https://api.github.com/repos/${{ github.event.inputs.REPOSITORY }}/dispatches \
+        curl -X POST https://api.github.com/repos/${{ inputs.REPOSITORY }}/dispatches \
         --header 'Accept: application/vnd.github.everest-preview+json' \
-        -u ${{ github.event.inputs.ACCESS_TOKEN }} \
-        --data '${{ github.event.inputs.DATA }}'
+        -u ${{ inputs.ACCESS_TOKEN }} \
+        --data '${{ inputs.DATA }}'
