@@ -16,8 +16,8 @@ runs:
   using: composite
   steps: 
     - name: Dispaches
-    - shell: bash
-    - run: |
+      shell: bash
+      run: |
         curl -X POST https://api.github.com/repos/${{ inputs.REPOSITORY }}/dispatches \
         --header 'Accept: application/vnd.github.everest-preview+json' \
         -u ${{ inputs.ACCESS_TOKEN }} \
