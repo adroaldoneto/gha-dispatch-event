@@ -59,14 +59,12 @@ jobs:
           ref: ${{ github.event.client_payload.ref }}
       - run: |
           ls
-          echo "SHA: '${{ github.event.client_payload.sha }}'" 
-          echo "SHA: '${{ github.event.client_payload.repository }}'" 
           echo "'${{ github.event.client_payload.ref }}'"
           echo "REF: '${{ github.ref }}'"
           echo "Event Repository Name: '${{ github.event.respository.name }}'"
           echo "Event Repository Owner: '${{ github.repository_owner }}'"
           echo "Job Id: '${{ github.event.client_payload.job_id }}'"
-          echo "Pull Request Event: '${{ fromJson(github.event.client_payload.pull_request_event) }}'"
+          echo "Pull Request Event: '${{ github.event.client_payload.pull_request_event }}'"
           echo "Base Ref: '${{ github.event.client_payload.base_ref }}'"
           echo "statuses_href: '${{ github.event.client_payload.statuses_href }}'"
           exit 1
