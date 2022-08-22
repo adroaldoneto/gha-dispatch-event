@@ -40,7 +40,7 @@ jobs:
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
-          DATA: '{"event_type": "verify-workflow", "client_payload": { "state": "pending", "description": "validation started", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
+          DATA: '{"event_type": "security", "client_payload": { "state": "pending", "description": "validation started", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
 
       - name: Extract branch tag
         id: version
@@ -81,7 +81,7 @@ jobs:
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
-          DATA: '{"event_type": "verify-workflow", "client_payload": { "state": "success", "description": "validation completed successfully", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
+          DATA: '{"event_type": "security", "client_payload": { "state": "success", "description": "validation completed successfully", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
       
       - name: Failure status
         if: ${{ failure() }}
@@ -89,5 +89,5 @@ jobs:
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
-          DATA: '{"event_type": "verify-workflow", "client_payload": { "state": "failure", "description": "validation with error", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
+          DATA: '{"event_type": "security", "client_payload": { "state": "failure", "description": "validation with error", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
                     
