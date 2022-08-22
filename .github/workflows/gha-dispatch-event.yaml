@@ -32,12 +32,16 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
-      - name: Status
-        run: |
-          curl -X POST https://api.github.com/repos/adroaldoneto/gha-dispatch-event-initiator/dispatches \
-          -H 'Accept: application/vnd.github.everest-preview+json' \
-          -u ${{ secrets.ACCESS_TOKEN }} \
-          --data '{"event_type": "verify-workflow", "client_payload": { "state": "pending", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Pending status
+        uses: ./.github/actions/dispatch-event
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          REPO: adroaldoneto/gha-dispatch-event-initiator
+          DATA: '{"event_type": "verify-workflow", "client_payload": { "state": "pending", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
+
       - name: Extract branch tag
         id: version
         run: |
@@ -68,20 +72,19 @@ jobs:
           echo "Base Ref: '${{ github.event.client_payload.base_ref }}'"
           echo "statuses_href: '${{ github.event.client_payload.statuses_href }}'"
 
-      - name: Status
+      - name: Success status
         if: ${{ success() }}
-        run: |
-          curl -X POST https://api.github.com/repos/adroaldoneto/gha-dispatch-event-initiator/dispatches \
-          -H 'Accept: application/vnd.github.everest-preview+json' \
-          -u ${{ secrets.ACCESS_TOKEN }} \
-          --data '{"event_type": "verify-workflow", "client_payload": { "state": "success", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
+        uses: ./.github/actions/dispatch-event
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          REPO: adroaldoneto/gha-dispatch-event-initiator
+          DATA: '{"event_type": "verify-workflow", "client_payload": { "state": "success", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
       
-      - name: Status
+      - name: Failure status
         if: ${{ failure() }}
-        run: |
-          sleep 5s
-          curl -X POST https://api.github.com/repos/adroaldoneto/gha-dispatch-event-initiator/dispatches \
-          -H 'Accept: application/vnd.github.everest-preview+json' \
-          -u ${{ secrets.ACCESS_TOKEN }} \
-          --data '{"event_type": "verify-workflow", "client_payload": { "state": "failure", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
+        uses: ./.github/actions/dispatch-event
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          REPO: adroaldoneto/gha-dispatch-event-initiator
+          DATA: '{"event_type": "verify-workflow", "client_payload": { "state": "failure", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
                     
