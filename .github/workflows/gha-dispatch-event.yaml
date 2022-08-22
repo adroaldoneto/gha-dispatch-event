@@ -72,6 +72,9 @@ jobs:
           echo "Base Ref: '${{ github.event.client_payload.base_ref }}'"
           echo "statuses_href: '${{ github.event.client_payload.statuses_href }}'"
 
+      - name: Checkout - internal repository
+        uses: actions/checkout@v3
+
       - name: Success status
         if: ${{ success() }}
         uses: ./.github/actions/dispatch-event
