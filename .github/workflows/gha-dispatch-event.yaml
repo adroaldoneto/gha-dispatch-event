@@ -77,7 +77,7 @@ jobs:
           curl -X POST https://api.github.com/repos/adroaldoneto/gha-dispatch-event-initiator/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -u ${{ secrets.ACCESS_TOKEN }} \
-          --data '{"event_type": "verify-workflow", "client_payload": { "sha": "${{ github.event.client_payload.sha }}", "state": "success", statuses_href: ${{ github.event.client_payload.statuses_href }} }}'
+          --data '{"event_type": "verify-workflow", "client_payload": { "state": "success", statuses_href: ${{ github.event.client_payload.statuses_href }} }}'
       
       - name: Status
         if: ${{ failure() }}
@@ -85,5 +85,5 @@ jobs:
           curl -X POST https://api.github.com/repos/adroaldoneto/gha-dispatch-event-initiator/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -u ${{ secrets.ACCESS_TOKEN }} \
-          --data '{"event_type": "verify-workflow", "client_payload": { "sha": "${{ github.event.client_payload.sha }}", "state": "failure", statuses_href: ${{ github.event.client_payload.statuses_href }} }}'
+          --data '{"event_type": "verify-workflow", "client_payload": { "state": "failure", statuses_href: ${{ github.event.client_payload.statuses_href }} }}'
                     
