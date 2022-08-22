@@ -39,7 +39,7 @@ jobs:
         uses: ./.github/actions/dispatch-event
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          REPO: adroaldoneto/gha-dispatch-event-initiator
+          REPO: 'adroaldoneto/gha-dispatch-event-initiator'
           DATA: '{"event_type": "verify-workflow", "client_payload": { "state": "pending", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
 
       - name: Extract branch tag
@@ -80,7 +80,7 @@ jobs:
         uses: ./.github/actions/dispatch-event
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          REPO: adroaldoneto/gha-dispatch-event-initiator
+          REPO: 'adroaldoneto/gha-dispatch-event-initiator'
           DATA: '{"event_type": "verify-workflow", "client_payload": { "state": "success", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
       
       - name: Failure status
@@ -88,6 +88,6 @@ jobs:
         uses: ./.github/actions/dispatch-event
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          REPO: adroaldoneto/gha-dispatch-event-initiator
+          REPO: 'adroaldoneto/gha-dispatch-event-initiator'
           DATA: '{"event_type": "verify-workflow", "client_payload": { "state": "failure", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
                     
