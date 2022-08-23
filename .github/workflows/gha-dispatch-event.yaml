@@ -75,6 +75,9 @@ jobs:
   LAST_DISPATCH_EVENT:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout - internal repository
+        uses: actions/checkout@v3
+
       - name: Last dispatch event
         uses: ./.github/actions/last-dispatch-event
         with:
