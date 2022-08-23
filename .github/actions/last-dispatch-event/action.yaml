@@ -27,11 +27,10 @@ runs:
     - name: Show
       shell: bash
       run: |
-        echo "${{ fromJSON(fromJson(inputs.RESULTS_OF_JOBS).states) }}"
-        echo "${{ toJSON(fromJson(inputs.RESULTS_OF_JOBS).states) }}"
+        echo "${{ fromJSON(toJSON(inputs.RESULTS_OF_JOBS).states) }}"
 
     - name: Success status
-      if: ${{ !contains(toJSON(fromJSON(inputs.RESULTS_OF_JOBS).states), 'failure') }}
+      if: ${{ !contains(fromJSON(toJSON(inputs.RESULTS_OF_JOBS).states), 'failure') }}
       uses: ./.github/actions/dispatch-event
       with:
         ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
