@@ -27,7 +27,7 @@ runs:
     - name: Show
       shell: bash
       run: |
-        JSON=${{ inputs.RESULTS_OF_JOBS }}
+        JSON='${{ inputs.RESULTS_OF_JOBS }}'
         echo "::set-output name=value::$(echo $JSON | jq -c '.states')"
 
     # - name: Success status
