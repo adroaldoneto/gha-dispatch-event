@@ -27,13 +27,13 @@ runs:
     - name: Show
       shell: bash
       run: |
-        echo "${{ inputs.RESULTS_OF_JOBS }}"
+        echo "${{ inputs.RESULTS_OF_JOBS.states }}"
 
     - name: Success status
       if: |
-        ${{ !contains(fromJson(inputs.RESULTS_OF_JOBS), 'failure') 
-          || !contains(fromJson(inputs.RESULTS_OF_JOBS), 'cancelled') 
-          || !contains(fromJson(inputs.RESULTS_OF_JOBS), 'skipped')}}
+        ${{ !contains(fromJson(inputs.RESULTS_OF_JOBS.states), 'failure') 
+          || !contains(fromJson(inputs.RESULTS_OF_JOBS.states), 'cancelled') 
+          || !contains(fromJson(inputs.RESULTS_OF_JOBS.states), 'skipped') }}
       uses: ./.github/actions/dispatch-event
       with:
         ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
@@ -41,7 +41,7 @@ runs:
         DATA: '{"event_type": "${{ inputs.EVENT_TYPE }}", "client_payload": { "state": "success", "description": "${{ inputs.SUCCESS_DESCRIPTION }}", "statuses_href": "${{ inputs.statuses_href }}" }}'
     
     - name: Failure status
-      if: ${{ contains(inputs.RESULTS_OF_JOBS, 'failure') }}
+      if: ${{ contains(inputs.RESULTS_OF_JOBS.states, 'failure') }}
       uses: ./.github/actions/dispatch-event
       with:
         ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}

@@ -82,12 +82,6 @@ jobs:
     steps:
       - name: Checkout - internal repository
         uses: actions/checkout@v3
-      
-      - name: Join results of jobs
-        id: result_of_jobs
-        run: |
-          RESULTS_OF_JOBS=${{ needs[*].result }}
-          echo "::set-output name=values::$RESULTS_OF_JOBS"
 
       - name: Last dispatch event
         uses: ./.github/actions/last-dispatch-event
