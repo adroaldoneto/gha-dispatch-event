@@ -25,7 +25,7 @@ runs:
   using: composite
   steps: 
     - name: Show
-      shell:bash
+      shell: bash
       run: |
         echo "${{ contains(inputs.RESULTS_OF_JOBS }}"
 
@@ -43,8 +43,6 @@ runs:
     - name: Failure status
       if: ${{ contains(inputs.RESULTS_OF_JOBS, 'failure') }}
       uses: ./.github/actions/dispatch-event
-      shell:bash
-      run: echo "${{ contains(inputs.RESULTS_OF_JOBS }}"
       with:
         ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
         REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
