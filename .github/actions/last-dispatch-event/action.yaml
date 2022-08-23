@@ -1,0 +1,41 @@
+name: Last dispatch event  
+description: Last dispatch event  
+
+inputs:
+  ACCESS_TOKEN:
+    description: Access token
+    required: true
+  EVENT_TYPE:
+    description: Event type name
+    required: true
+  SUCCESS_DESCRIPTION:
+    description: Success description
+    required: true
+  ERROR_DESCRIPTION:
+    description: Error description
+    required: true
+  STATUSES_HREF:
+    description: Error description
+    required: true
+
+runs:
+  using: composite
+  steps: 
+    - name: Checkout - internal repository
+      uses: actions/checkout@v3
+
+    - name: Success status
+      if: ${{ success() }}
+      uses: ./.github/actions/dispatch-event
+      with:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
+        DATA: '{"event_type": "${{ inputs.EVENT_TYPE }}", "client_payload": { "state": "success", "description": "${{ inputs.SUCCESS_DESCRIPTION }}", "statuses_href": "${{ inputs.statuses_href }}" }}'
+    
+    - name: Failure status
+      if: ${{ failure() }}
+      uses: ./.github/actions/dispatch-event
+      with:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
+        DATA: '{"event_type": "${{ inputs.EVENT_TYPE }}", "client_payload": { "state": "failure", "description": "${{ inputs.ERROR_DESCRIPTION }}", "statuses_href": "${{ inputs.statuses_href }}" }}'

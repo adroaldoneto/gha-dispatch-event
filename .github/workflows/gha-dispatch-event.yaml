@@ -40,7 +40,7 @@ jobs:
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
-          DATA: '{"event_type": "release", "client_payload": { "state": "pending", "description": "validation started", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
+          DATA: '{"event_type": "security", "client_payload": { "state": "pending", "description": "validation started", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
 
       - name: Extract branch tag
         id: version
@@ -72,22 +72,14 @@ jobs:
           echo "Base Ref: '${{ github.event.client_payload.base_ref }}'"
           echo "statuses_href: '${{ github.event.client_payload.statuses_href }}'"
 
-      - name: Checkout - internal repository
-        uses: actions/checkout@v3
-
-      - name: Success status
-        if: ${{ success() }}
-        uses: ./.github/actions/dispatch-event
+  LAST_DISPATCH_EVENT:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Last dispatch event
+        uses: ./.github/actions/last-dispatch-event
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
-          DATA: '{"event_type": "security", "client_payload": { "state": "success", "description": "validation completed successfully", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
-      
-      - name: Failure status
-        if: ${{ failure() }}
-        uses: ./.github/actions/dispatch-event
-        with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
-          DATA: '{"event_type": "security", "client_payload": { "state": "failure", "description": "validation with error", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
-                    
+          EVENT_TYPE: 'security'
+          SUCCESS_DESCRIPTION: 'validation completed successfully'
+          ERROR_DESCRIPTION: 'validation with error'
+          STATUSES_HREF: '${{ github.event.client_payload.statuses_href }}'
