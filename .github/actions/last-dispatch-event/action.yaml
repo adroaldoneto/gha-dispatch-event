@@ -27,9 +27,8 @@ runs:
     - name: Show
       shell: bash
       run: |
-        JSON=${{ toJSON(inputs.RESULTS_OF_JOBS) }}
-        RESULT=$("echo $JSON | jq -c '.states'")
-        echo "'$RESULT'"
+        JSON=${{ inputs.RESULTS_OF_JOBS }}
+        echo "::set-output name=value::$(echo $JSON | jq -c '.states')"
 
     # - name: Success status
     #   if: ${{ !contains(fromJSON(inputs.RESULTS_OF_JOBS)), 'failure') }}
