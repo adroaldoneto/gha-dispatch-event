@@ -86,6 +86,8 @@ jobs:
       - name: Join results of jobs
         id: result_of_jobs
         run: |
+          echo "${{ needs.*.result }}"
+          echo "${{ needs[*].result }}"
           RESULTS_OF_JOBS=$(join(${{ needs[*].result }}, ','))
           echo "::set-output name=values::$RESULTS_OF_JOBS"
 
