@@ -86,8 +86,8 @@ jobs:
       - name: Join results of jobs
         id: result_of_jobs
         run: |
-          RESULTS_OF_JOBS='${{ needs[*].result }}'
-          echo "::set-output name=values::'$RESULTS_OF_JOBS'"
+          RESULTS_OF_JOBS=${{ needs[*].result }}
+          echo "::set-output name=values::$RESULTS_OF_JOBS"
 
       - name: Last dispatch event
         uses: ./.github/actions/last-dispatch-event
@@ -97,4 +97,4 @@ jobs:
           SUCCESS_DESCRIPTION: 'validation completed successfully'
           ERROR_DESCRIPTION: 'validation with error'
           STATUSES_HREF: '${{ github.event.client_payload.statuses_href }}'
-          RESULTS_OF_JOBS: '${{ steps.result_of_jobs.outputs.values }}'
+          RESULTS_OF_JOBS: ${{ steps.result_of_jobs.outputs.values }}
