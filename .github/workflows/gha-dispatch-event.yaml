@@ -71,9 +71,13 @@ jobs:
           echo "Pull Request Event: '${{ github.event.client_payload.pull_request_event }}'"
           echo "Base Ref: '${{ github.event.client_payload.base_ref }}'"
           echo "statuses_href: '${{ github.event.client_payload.statuses_href }}'"
+          exit 1
 
   LAST_DISPATCH_EVENT:
     runs-on: ubuntu-latest
+    needs:
+      - extract_version
+      - build
     steps:
       - name: Checkout - internal repository
         uses: actions/checkout@v3
