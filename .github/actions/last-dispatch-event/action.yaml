@@ -25,23 +25,24 @@ runs:
   using: composite
   steps: 
     - name: Show
+      id: states
       shell: bash
       run: |
         JSON='${{ inputs.RESULTS_OF_JOBS }}'
         echo "::set-output name=value::$(echo $JSON | jq -c '.states')"
 
-    # - name: Success status
-    #   if: ${{ !contains(fromJSON(inputs.RESULTS_OF_JOBS)), 'failure') }}
-    #   uses: ./.github/actions/dispatch-event
-    #   with:
-    #     ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
-    #     REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
-    #     DATA: '{"event_type": "${{ inputs.EVENT_TYPE }}", "client_payload": { "state": "success", "description": "${{ inputs.SUCCESS_DESCRIPTION }}", "statuses_href": "${{ inputs.statuses_href }}" }}'
+    - name: Success status
+      if: ${{ !contains(fromJSON(steps.states.outputs.value), 'failure') }}
+      uses: ./.github/actions/dispatch-event
+      with:
+        ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
+        REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
+        DATA: '{"event_type": "${{ inputs.EVENT_TYPE }}", "client_payload": { "state": "success", "description": "${{ inputs.SUCCESS_DESCRIPTION }}", "statuses_href": "${{ inputs.statuses_href }}" }}'
     
-    # - name: Failure status
-    #   if: ${{ contains(toJSON(inputs.RESULTS_OF_JOBS).states, 'failure') }}
-    #   uses: ./.github/actions/dispatch-event
-    #   with:
-    #     ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
-    #     REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
-    #     DATA: '{"event_type": "${{ inputs.EVENT_TYPE }}", "client_payload": { "state": "failure", "description": "${{ inputs.ERROR_DESCRIPTION }}", "statuses_href": "${{ inputs.statuses_href }}" }}'
+    - name: Failure status
+      if: ${{ contains(fromJSON(steps.states.outputs.value), 'failure') }}
+      uses: ./.github/actions/dispatch-event
+      with:
+        ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
+        REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
+        DATA: '{"event_type": "${{ inputs.EVENT_TYPE }}", "client_payload": { "state": "failure", "description": "${{ inputs.ERROR_DESCRIPTION }}", "statuses_href": "${{ inputs.statuses_href }}" }}'
