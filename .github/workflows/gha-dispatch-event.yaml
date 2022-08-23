@@ -40,7 +40,7 @@ jobs:
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
-          DATA: '{"event_type": "security", "client_payload": { "state": "pending", "description": "validation started", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
+          DATA: '{"event_type": "SECURITY", "client_payload": { "state": "pending", "description": "validation started", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
 
       - name: Extract branch tag
         id: version
@@ -87,7 +87,7 @@ jobs:
         uses: ./.github/actions/last-dispatch-event
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          EVENT_TYPE: 'security'
+          EVENT_TYPE: 'SECURITY'
           SUCCESS_DESCRIPTION: 'validation completed successfully'
           ERROR_DESCRIPTION: 'validation with error'
           STATUSES_HREF: '${{ github.event.client_payload.statuses_href }}'
