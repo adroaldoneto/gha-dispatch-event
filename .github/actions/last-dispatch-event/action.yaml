@@ -33,9 +33,9 @@ runs:
 
     - name: Success status
       if: | 
-          ${{ !contains(fromJSON(steps.states.outputs.value), 'failure') && 
-              !contains(fromJSON(steps.states.outputs.value), 'cancelled') &&
-              !contains(fromJSON(steps.states.outputs.value), 'skipped' }}
+            !contains(fromJSON(steps.states.outputs.value), 'failure') && 
+            !contains(fromJSON(steps.states.outputs.value), 'cancelled') &&
+            !contains(fromJSON(steps.states.outputs.value), 'skipped')
       uses: ./.github/actions/dispatch-event
       with:
         ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
