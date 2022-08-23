@@ -78,6 +78,7 @@ jobs:
     needs:
       - extract_version
       - build
+    if: always()
     steps:
       - name: Checkout - internal repository
         uses: actions/checkout@v3
