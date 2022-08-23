@@ -27,7 +27,7 @@ runs:
     - name: Show
       shell: bash
       run: |
-        echo "${{ fromJSON(toJSON(inputs.RESULTS_OF_JOBS).states) }}"
+        echo "${{ toJSON(inputs.RESULTS_OF_JOBS) }}"
 
     - name: Success status
       if: ${{ !contains(fromJSON(toJSON(inputs.RESULTS_OF_JOBS).states), 'failure') }}
@@ -38,7 +38,7 @@ runs:
         DATA: '{"event_type": "${{ inputs.EVENT_TYPE }}", "client_payload": { "state": "success", "description": "${{ inputs.SUCCESS_DESCRIPTION }}", "statuses_href": "${{ inputs.statuses_href }}" }}'
     
     - name: Failure status
-      if: ${{ contains(fromJson(fromJson(inputs.RESULTS_OF_JOBS).states), 'failure') }}
+      if: ${{ contains(toJSON(inputs.RESULTS_OF_JOBS).states, 'failure') }}
       uses: ./.github/actions/dispatch-event
       with:
         ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
