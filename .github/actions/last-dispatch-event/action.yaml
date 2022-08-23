@@ -28,7 +28,7 @@ runs:
       shell: bash
       run: |
         echo "${{ fromJSON(fromJSON(fromJson(inputs.RESULTS_OF_JOBS).states) }}"
-        echo "${{ toJSON(fromJSON(fromJson(inputs.RESULTS_OF_JOBS).states) }}"
+        echo "${{ toJSON(fromJson(inputs.RESULTS_OF_JOBS).states) }}"
 
     - name: Success status
       if: ${{ !contains(fromJSON(fromJSON(inputs.RESULTS_OF_JOBS).states), 'failure') }}
