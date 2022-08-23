@@ -87,7 +87,7 @@ jobs:
         id: result_of_jobs
         run: |
           RESULTS_OF_JOBS='${{ toJson(needs[*].result) }}''
-          echo "::set-output name=values::'${{ toJson(needs[*].result) }}'"
+          echo "::set-output name=values::$RESULTS_OF_JOBS"
 
       - name: Last dispatch event
         uses: ./.github/actions/last-dispatch-event
