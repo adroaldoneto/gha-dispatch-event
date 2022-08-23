@@ -18,13 +18,13 @@ inputs:
     description: Statuses link
     required: true
   RESULTS_OF_JOBS:
-    description: Concatenation of job results
+    description: Payload of job results
     required: true
 
 runs:
   using: composite
   steps: 
-    - name: Show
+    - name: Get states
       id: states
       shell: bash
       run: |
@@ -32,7 +32,10 @@ runs:
         echo "::set-output name=value::$(echo $JSON | jq -c '.states')"
 
     - name: Success status
-      if: ${{ !contains(fromJSON(steps.states.outputs.value), 'failure') }}
+      if: | 
+          ${{ !contains(fromJSON(steps.states.outputs.value), 'failure') && 
+              !contains(fromJSON(steps.states.outputs.value), 'cancelled') &&
+              !contains(fromJSON(steps.states.outputs.value), 'skipped' }}
       uses: ./.github/actions/dispatch-event
       with:
         ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
