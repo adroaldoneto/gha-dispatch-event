@@ -97,4 +97,4 @@ jobs:
           SUCCESS_DESCRIPTION: 'validation completed successfully'
           ERROR_DESCRIPTION: 'validation with error'
           STATUSES_HREF: '${{ github.event.client_payload.statuses_href }}'
-          RESULTS_OF_JOBS: ${{ steps.result_of_jobs.outputs.values }}
+          RESULTS_OF_JOBS: '{ "states": ${{ toJson(steps.result_of_jobs.outputs.values) }}}'
