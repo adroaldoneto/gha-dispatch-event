@@ -27,7 +27,7 @@ runs:
     - name: Show
       shell: bash
       run: |
-        echo "${{ inputs.RESULTS_OF_JOBS.states }}"
+        echo "${{ fromJson(inputs.RESULTS_OF_JOBS).states }}"
 
     - name: Success status
       if: |
