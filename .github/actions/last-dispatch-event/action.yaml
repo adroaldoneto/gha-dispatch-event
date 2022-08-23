@@ -30,10 +30,7 @@ runs:
         echo "${{ fromJson(inputs.RESULTS_OF_JOBS).states }}"
 
     - name: Success status
-      if: |
-        ${{ !contains(fromJson(fromJson(inputs.RESULTS_OF_JOBS).states)), 'failure') 
-          || !contains(fromJson(fromJson(inputs.RESULTS_OF_JOBS).states)), 'cancelled') 
-          || !contains(fromJson(fromJson(inputs.RESULTS_OF_JOBS).states)), 'skipped') }}
+      if: ${{ !contains(fromJson(fromJson(inputs.RESULTS_OF_JOBS).states)), 'failure') }}
       uses: ./.github/actions/dispatch-event
       with:
         ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
