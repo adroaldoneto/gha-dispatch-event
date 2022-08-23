@@ -31,9 +31,9 @@ runs:
 
     - name: Success status
       if: |
-        ${{ !contains(join(inputs.RESULTS_OF_JOBS, ','), 'failure') 
-          || !contains(join(inputs.RESULTS_OF_JOBS, ','), 'cancelled') 
-          || !contains(join(inputs.RESULTS_OF_JOBS, ','), 'skipped')}}
+        ${{ !contains(inputs.RESULTS_OF_JOBS, 'failure') 
+          || !contains(inputs.RESULTS_OF_JOBS, 'cancelled') 
+          || !contains(inputs.RESULTS_OF_JOBS, 'skipped')}}
       uses: ./.github/actions/dispatch-event
       with:
         ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
