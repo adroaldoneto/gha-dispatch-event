@@ -88,7 +88,7 @@ jobs:
         run: |
           echo "${{ toJson(needs.*.result) }}"
           echo "${{ toJson(needs[*].result) }}"
-          RESULTS_OF_JOBS=$(join(${{ needs[*].result }}, ','))
+          RESULTS_OF_JOBS=$(join(${{ toJson(needs[*].result) }}, ','))
           echo "::set-output name=values::$RESULTS_OF_JOBS"
 
       - name: Last dispatch event
