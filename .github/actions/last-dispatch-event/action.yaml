@@ -27,7 +27,7 @@ runs:
     - name: Show
       shell: bash
       run: |
-        echo "${{ contains(inputs.RESULTS_OF_JOBS }}"
+        echo "${{ inputs.RESULTS_OF_JOBS }}"
 
     - name: Success status
       if: |
