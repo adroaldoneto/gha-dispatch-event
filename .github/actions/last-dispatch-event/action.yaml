@@ -15,14 +15,20 @@ inputs:
     description: Error description
     required: true
   STATUSES_HREF:
-    description: Error description
+    description: Statuses link
+    required: true
+  RESULTS_OF_JOBS:
+    description: Concatenation of job results
     required: true
 
 runs:
   using: composite
   steps: 
     - name: Success status
-      if: ${{ success() }}
+      if: |
+        ${{ !contains(inputs.RESULTS_OF_JOBS, 'failure') 
+          || !contains(inputs.RESULTS_OF_JOBS, 'cancelled') 
+          || !contains(inputs.RESULTS_OF_JOBS, 'skipped')}}
       uses: ./.github/actions/dispatch-event
       with:
         ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
@@ -30,7 +36,7 @@ runs:
         DATA: '{"event_type": "${{ inputs.EVENT_TYPE }}", "client_payload": { "state": "success", "description": "${{ inputs.SUCCESS_DESCRIPTION }}", "statuses_href": "${{ inputs.statuses_href }}" }}'
     
     - name: Failure status
-      if: ${{ failure() }}
+      if: ${{ contains(inputs.RESULTS_OF_JOBS, 'failure') }}
       uses: ./.github/actions/dispatch-event
       with:
         ACCESS_TOKEN: ${{ inputs.ACCESS_TOKEN }}
