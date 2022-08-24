@@ -64,7 +64,7 @@ jobs:
         uses: actions/checkout@v3
 
       - run: |
-          ls
+          ll
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -72,7 +72,7 @@ jobs:
           repository: adroaldoneto/gha-dispatch-event-initiator
           ref: ${{ github.event.client_payload.ref }}
       - run: |
-          ls
+          ll
           echo "'${{ github.event.client_payload.ref }}'"
           echo "REF: '${{ github.ref }}'"
           echo "Event Repository Name: '${{ github.event.respository.name }}'"
@@ -88,7 +88,9 @@ jobs:
           path: test
 
       - run: |
-          ls
+          mv test/.test .test
+          mv test/test-event.md test-event.md
+          ll
 
   LAST_DISPATCH_EVENT:
     runs-on: ubuntu-latest
