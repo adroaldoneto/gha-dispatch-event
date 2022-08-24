@@ -26,11 +26,8 @@ on:
 
 jobs:
 
-  extract_version:
-    name: extract_version-${{ github.event.client_payload.job_id }}
+  first_callback_event:
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.version.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -42,6 +39,12 @@ jobs:
           REPOSITORY: 'adroaldoneto/gha-dispatch-event-initiator'
           DATA: '{"event_type": "SECURITY", "client_payload": { "state": "pending", "description": "validation started", "statuses_href": "${{ github.event.client_payload.statuses_href }}" }}'
 
+  extract_version:
+    name: extract_version-${{ github.event.client_payload.job_id }}
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
       - name: Extract branch tag
         id: version
         run: |
