@@ -63,6 +63,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - run: |
+          ls
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -78,6 +81,14 @@ jobs:
           echo "Pull Request Event: '${{ github.event.client_payload.pull_request_event }}'"
           echo "Base Ref: '${{ github.event.client_payload.base_ref }}'"
           echo "statuses_href: '${{ github.event.client_payload.statuses_href }}'"
+      
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: test
+
+      - run: |
+          ls
 
   LAST_DISPATCH_EVENT:
     runs-on: ubuntu-latest
