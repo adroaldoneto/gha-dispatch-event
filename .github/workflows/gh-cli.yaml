@@ -26,7 +26,7 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           run: |
             gh release create v0.1.5 \
-              --repo repos/adroaldoneto/gha-dispatch-event-initiator
+              --repo https://github.com/adroaldoneto/gha-dispatch-event-initiator
               --draft \
               --title "v0.1.5" \
               --notes "$(cat << 'EOM' TESTE
