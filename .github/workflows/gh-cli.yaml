@@ -27,7 +27,7 @@ jobs:
           run: |
             gh release create v0.1.7 \
               --repo https://github.com/adroaldoneto/gha-dispatch-event-initiator \
-              --target "${github.event.ref}" \ 
+              --target "${{ github.ref_name }}" \ 
               --draft \
               --title "v0.1.7" \
               --generate-notes
