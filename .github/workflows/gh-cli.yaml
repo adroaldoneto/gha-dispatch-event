@@ -6,7 +6,7 @@ jobs:
       name: Release Draft
       runs-on: ubuntu-latest
       steps:
-s
+
         # Check out current repository
         - name: Checkout
           uses: actions/checkout@v3
