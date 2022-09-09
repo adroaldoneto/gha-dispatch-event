@@ -4,10 +4,9 @@ on:
 jobs:  
   releaseDraft:
       name: Release Draft
-      needs: build
       runs-on: ubuntu-latest
       steps:
-
+s
         # Check out current repository
         - name: Checkout
           uses: actions/checkout@v3
