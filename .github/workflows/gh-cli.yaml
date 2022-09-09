@@ -25,11 +25,10 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           run: |
-            gh release create v0.1.6 \
+            gh release create v0.1.7 \
               --repo https://github.com/adroaldoneto/gha-dispatch-event-initiator \
+              --target main \
+              --notes-start-tag v0.1.5 \  
               --draft \
-              --title "v0.1.6" \
-              --notes "$(cat << 'EOM' 
-            teste
-            EOM
-            )"
+              --title "v0.1.7"
+              --generate-notes
