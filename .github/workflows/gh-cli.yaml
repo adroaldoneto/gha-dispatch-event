@@ -25,9 +25,9 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           run: |
-            gh release create v0.1.7 \
-              --repo https://github.com/adroaldoneto/gha-dispatch-event-initiator \
-              --target "${{ github.ref }}" \ 
-              --draft \
-              --title "v0.1.7" \
-              --generate-notes
+          jq -n \
+            '{"tag_name":"v0.1.9","target_commitish":"gh-cli","name":"v0.1.9","draft":true,"prerelease":false,"generate_release_notes":true}' 
+          | gh api -X POST /repos/adroaldoneto/gha-dispatch-event-initiator/releases --input -
+
+
+
