@@ -28,6 +28,3 @@ jobs:
             jq -n \
             '{"tag_name":"v0.2.2","target_commitish":"gh-cli","name":"v0.2.2","draft":true,"prerelease":false,"generate_release_notes":true}' \
             | gh api -X POST /repos/adroaldoneto/gha-dispatch-event-initiator/releases --input -
-
-
-
