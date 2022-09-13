@@ -26,5 +26,5 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           run: |
             jq -n \
-            '{"tag_name":"v0.2.5","target_commitish":"gh-cli","name":"v0.2.5","draft":true,"prerelease":false,"generate_release_notes":true}' \
+            '{"tag_name":"v0.2.6","target_commitish":"gh-cli","name":"v0.2.6","draft":true,"prerelease":false,"generate_release_notes":true}' \
             | gh api -X POST /repos/adroaldoneto/gha-dispatch-event-initiator/releases --input -
